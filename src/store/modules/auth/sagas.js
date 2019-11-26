@@ -10,6 +10,8 @@ export function* signIn({ payload }) {
   try {
     const { email, password } = payload;
 
+    console.tron.log('payload', payload);
+
     const response = yield call(api.post, 'sessions', {
       email,
       password,
@@ -17,7 +19,7 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
-    if (!user.provider) {
+    if (user.name !== 'Administrator') {
       toast.error('You are not allowed to login');
       yield put(signFailure());
       return;
@@ -27,7 +29,7 @@ export function* signIn({ payload }) {
 
     yield put(signInSuccess(token, user));
 
-    history.push('/dashboard');
+    history.push('/students');
   } catch (err) {
     toast.error('Authentication failure');
     yield put(signFailure());
