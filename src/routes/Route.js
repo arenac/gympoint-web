@@ -10,7 +10,7 @@ import { store } from '~/store';
 export default function RouterWrapper({ component: Component, ...rest }) {
   const { signed } = store.getState().auth;
 
-  if (signed) {
+  if (!signed) {
     return <Redirect to="/" />;
   }
 
