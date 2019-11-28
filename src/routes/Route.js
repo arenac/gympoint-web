@@ -14,7 +14,7 @@ export default function RouterWrapper({ component: Component, ...rest }) {
     return <Redirect to="/" />;
   }
 
-  const Layout = signed ? DefaultLayout : AuthLayout;
+  const Layout = !signed ? DefaultLayout : AuthLayout;
 
   return (
     <Route
