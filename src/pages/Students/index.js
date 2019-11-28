@@ -13,26 +13,26 @@ export default function Students() {
   return (
     <Container>
       <Header>
-        <span>Stundent List</span>
-        <div>
-          <button type="button">Register</button>
+        <strong>Stundent List</strong>
+        <aside>
+          <button type="button">REGISTER</button>
           <input type="text" />
-        </div>
+        </aside>
       </Header>
       <Content>
         <StudentTable>
           <thead>
             <th>NAME</th>
-            <th>AGE</th>
             <th>E-MAIL</th>
+            <th>AGE</th>
             <th />
             <th />
           </thead>
-          <body>
+          <tbody>
             <tr>
-              <td>Nilo</td>
-              <td>35</td>
+              <td>Nilo Neregato</td>
               <td>neregato.nilo@gmail.com</td>
+              <td>35</td>
               <td>
                 <EditButton type="button">edit</EditButton>
               </td>
@@ -40,7 +40,7 @@ export default function Students() {
                 <DeleteButton type="button">delete</DeleteButton>
               </td>
             </tr>
-          </body>
+          </tbody>
         </StudentTable>
       </Content>
     </Container>
