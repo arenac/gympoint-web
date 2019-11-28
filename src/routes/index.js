@@ -13,10 +13,10 @@ export default function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={SignIn} />
-      <Route path="/students" component={Students} />
-      <Route path="/plans" component={Plans} />
-      <Route path="/enrollments" component={Enrollments} />
-      <Route path="/help" component={Help} />
+      <Route path="/students" component={Students} isPrivate />
+      <Route path="/plans" component={Plans} isPrivate />
+      <Route path="/enrollments" component={Enrollments} isPrivate />
+      <Route path="/help" component={Help} isPrivate />
     </Switch>
   );
 }
