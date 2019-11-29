@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import api from '~/services/api';
 
 import {
   Container,
@@ -10,6 +12,18 @@ import {
 } from './styles';
 
 export default function Students() {
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    async function fetchStudents() {
+      const response = await api.get('students');
+
+      setStudents(response.data);
+    }
+
+    fetchStudents();
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -29,17 +43,19 @@ export default function Students() {
             <th />
           </thead>
           <tbody>
-            <tr>
-              <td>Nilo Neregato</td>
-              <td>neregato.nilo@gmail.com</td>
-              <td>35</td>
-              <td>
-                <EditButton type="button">edit</EditButton>
-              </td>
-              <td>
-                <DeleteButton type="button">delete</DeleteButton>
-              </td>
-            </tr>
+            {students.map(student => (
+              <tr key={student.id}>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.age}</td>
+                <td>
+                  <EditButton type="button">edit</EditButton>
+                </td>
+                <td>
+                  <DeleteButton type="button">delete</DeleteButton>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </StudentTable>
       </Content>
