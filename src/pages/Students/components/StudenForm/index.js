@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Scope } from '@rocketseat/unform';
+import { toast } from 'react-toastify';
+
+import api from '~/services/api';
 
 import { Container, Header, Content } from './styles';
 
@@ -15,19 +18,45 @@ export default function StudenForm({
     onSetStudentToEdit(null);
   }
 
+  async function registerStudent(data) {
+    try {
+      await api.post('students', data);
+    } catch (err) {
+      toast.error('Stundet subscription failure');
+    }
+  }
+
+  async function updateStudent(data) {
+    try {
+      await api.put(`/students/${student.id}`, data);
+    } catch (err) {
+      toast.error('Student update failure');
+    }
+  }
+
+  async function handleSubmit(data) {
+    console.tron.log('data', data);
+    if (student) {
+      updateStudent(data);
+    } else {
+      registerStudent(data);
+    }
+    handleReturn();
+  }
+
   return (
     <Container>
-      <Header>
-        <strong>{student ? 'Edit student' : 'Register student'}</strong>
-        <aside>
-          <button type="button" isgray={_return} onClick={handleReturn}>
-            RETURN
-          </button>
-          <button type="button">SAVE</button>
-        </aside>
-      </Header>
-      <Content>
-        <Form name="studentform" initialData={student}>
+      <Form id="student-form" initialData={student} onSubmit={handleSubmit}>
+        <Header>
+          <strong>{student ? 'Edit student' : 'Register student'}</strong>
+          <aside>
+            <button type="button" isgray={_return} onClick={handleReturn}>
+              RETURN
+            </button>
+            <button type="submit">SAVE</button>
+          </aside>
+        </Header>
+        <Content>
           <label htmlFor="name">FULL NAME</label>
           <Input name="name" />
           <label htmlFor="email">E-MAIL</label>
@@ -47,8 +76,8 @@ export default function StudenForm({
               <Input name="height" />
             </div>
           </div>
-        </Form>
-      </Content>
+        </Content>
+      </Form>
     </Container>
   );
 }

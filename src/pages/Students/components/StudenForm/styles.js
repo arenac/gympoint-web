@@ -38,33 +38,31 @@ export const Content = styled.div`
   background: #fff;
   border-radius: 4px;
 
-  form {
+  flex: 1;
+  display: grid;
+
+  label {
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+  }
+
+  input {
     flex: 1;
-    display: grid;
+    height: 25px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    margin-right: 10px;
+  }
 
-    label {
-      margin: 10px 0 5px 0;
-      font-weight: bold;
-    }
-
-    input {
-      flex: 1;
-      height: 25px;
-      border-radius: 4px;
-      border: 1px solid #eee;
-      margin-right: 10px;
-    }
+  div {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
 
     div {
       flex: 1;
       display: flex;
-      flex-direction: row;
-
-      div {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-      }
+      flex-direction: column;
     }
   }
 `;
