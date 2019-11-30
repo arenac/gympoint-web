@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import api from '~/services/api';
+import StudentForm from './components/StudenForm';
 
 import {
   Container,
@@ -13,6 +14,8 @@ import {
 
 export default function Students() {
   const [students, setStudents] = useState([]);
+  const [showStudents, setShowStudents] = useState(true);
+  const [studentToEdit, setStudentToEdit] = useState(null);
 
   useEffect(() => {
     async function fetchStudents() {
@@ -24,41 +27,65 @@ export default function Students() {
     fetchStudents();
   }, []);
 
+  function handleEditStudent(student) {
+    setStudentToEdit(student);
+    setShowStudents(false);
+  }
+
   return (
     <Container>
-      <Header>
-        <strong>Stundent List</strong>
-        <aside>
-          <button type="button">REGISTER</button>
-          <input type="text" />
-        </aside>
-      </Header>
-      <Content>
-        <StudentTable>
-          <thead>
-            <th>NAME</th>
-            <th>E-MAIL</th>
-            <th>AGE</th>
-            <th />
-            <th />
-          </thead>
-          <tbody>
-            {students.map(student => (
-              <tr key={student.id}>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
-                <td>{student.age}</td>
-                <td>
-                  <EditButton type="button">edit</EditButton>
-                </td>
-                <td>
-                  <DeleteButton type="button">delete</DeleteButton>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </StudentTable>
-      </Content>
+      {showStudents ? (
+        <>
+          <Header>
+            <strong>Stundent List</strong>
+            <aside>
+              <button type="button" onClick={() => handleEditStudent(null)}>
+                REGISTER
+              </button>
+              <input type="text" />
+            </aside>
+          </Header>
+          <Content>
+            <StudentTable>
+              <thead>
+                <tr>
+                  <th>NAME</th>
+                  <th>E-MAIL</th>
+                  <th>AGE</th>
+                  <th />
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {students.map(student => (
+                  <tr key={student.id}>
+                    <td>{student.name}</td>
+                    <td>{student.email}</td>
+                    <td>{student.age}</td>
+                    <td>
+                      <EditButton
+                        type="button"
+                        onClick={() => handleEditStudent(student)}
+                      >
+                        edit
+                      </EditButton>
+                    </td>
+                    <td>
+                      <DeleteButton type="button">delete</DeleteButton>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </StudentTable>
+          </Content>
+        </>
+      ) : (
+        <StudentForm
+          student={studentToEdit}
+          onSetShowStudents={setShowStudents}
+          onSetStudentToEdit={setStudentToEdit}
+        />
+      )}
     </Container>
   );
 }
