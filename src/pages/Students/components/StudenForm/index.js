@@ -1,39 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Form, Input, Scope } from '@rocketseat/unform';
-import { toast } from 'react-toastify';
+import { Form, Input } from '@rocketseat/unform';
 
-import api from '~/services/api';
+import {
+  registerRequest,
+  updateRequest,
+  showStudents,
+} from '~/store/modules/student/actions';
 
 import { Container, Header, Content } from './styles';
 
 const _return = true;
-export default function StudenForm({ student, onShowStudents }) {
-  async function registerStudent(data) {
-    try {
-      await api.post('students', data);
-      onShowStudents(true);
-    } catch (err) {
-      toast.error('Stundet subscription failure');
-    }
-  }
+export default function StudenForm({ student }) {
+  const dispatch = useDispatch();
 
-  async function updateStudent(data) {
-    try {
-      await api.put(`/students/${student.id}`, data);
-      onShowStudents(true);
-    } catch (err) {
-      toast.error('Student update failure');
-    }
-  }
-
-  async function handleSubmit(data) {
-    console.tron.log('data', data);
+  function handleSubmit(data) {
     if (student) {
-      updateStudent(data);
+      dispatch(updateRequest(student.id, data));
     } else {
-      registerStudent(data);
+      dispatch(registerRequest(data));
     }
+  }
+
+  function handleReturn() {
+    dispatch(showStudents(true));
   }
 
   return (
@@ -42,7 +33,7 @@ export default function StudenForm({ student, onShowStudents }) {
         <Header>
           <strong>{student ? 'Edit student' : 'Register student'}</strong>
           <aside>
-            <button type="button" isgray={_return} onClick={onShowStudents}>
+            <button type="button" isgray={_return} onClick={handleReturn}>
               RETURN
             </button>
             <button type="submit">SAVE</button>
@@ -75,6 +66,5 @@ export default function StudenForm({ student, onShowStudents }) {
 }
 
 StudenForm.propType = {
-  student: PropTypes.object,
-  onShowStudents: PropTypes.func.isRequired,
+  student: PropTypes.objectOf(PropTypes.object),
 };
