@@ -40,6 +40,10 @@ export default function Students() {
     }
   }
 
+  async function handleDeleteStudent(id) {
+    await api.delete(`/students/${id}`);
+  }
+
   return (
     <Container>
       {showStudents ? (
@@ -79,7 +83,12 @@ export default function Students() {
                       </EditButton>
                     </td>
                     <td>
-                      <DeleteButton type="button">delete</DeleteButton>
+                      <DeleteButton
+                        type="button"
+                        onClick={() => handleDeleteStudent(student.id)}
+                      >
+                        delete
+                      </DeleteButton>
                     </td>
                   </tr>
                 ))}
