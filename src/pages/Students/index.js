@@ -17,19 +17,27 @@ export default function Students() {
   const [showStudents, setShowStudents] = useState(true);
   const [studentToEdit, setStudentToEdit] = useState(null);
 
+  async function fetchStudents() {
+    const response = await api.get('students');
+
+    setStudents(response.data);
+  }
+
   useEffect(() => {
-    async function fetchStudents() {
-      const response = await api.get('students');
-
-      setStudents(response.data);
-    }
-
     fetchStudents();
-  }, []);
+  }, [showStudents, setShowStudents]);
 
   function handleEditStudent(student) {
     setStudentToEdit(student);
     setShowStudents(false);
+  }
+
+  function handleShowStudents(refresh) {
+    setShowStudents(true);
+    setStudentToEdit(null);
+    if (refresh) {
+      fetchStudents();
+    }
   }
 
   return (
@@ -82,8 +90,7 @@ export default function Students() {
       ) : (
         <StudentForm
           student={studentToEdit}
-          onSetShowStudents={setShowStudents}
-          onSetStudentToEdit={setStudentToEdit}
+          onShowStudents={handleShowStudents}
         />
       )}
     </Container>

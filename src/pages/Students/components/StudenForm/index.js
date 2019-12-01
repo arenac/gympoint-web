@@ -8,19 +8,11 @@ import api from '~/services/api';
 import { Container, Header, Content } from './styles';
 
 const _return = true;
-export default function StudenForm({
-  student,
-  onSetShowStudents,
-  onSetStudentToEdit,
-}) {
-  function handleReturn() {
-    onSetShowStudents(true);
-    onSetStudentToEdit(null);
-  }
-
+export default function StudenForm({ student, onShowStudents }) {
   async function registerStudent(data) {
     try {
       await api.post('students', data);
+      onShowStudents(true);
     } catch (err) {
       toast.error('Stundet subscription failure');
     }
@@ -29,6 +21,7 @@ export default function StudenForm({
   async function updateStudent(data) {
     try {
       await api.put(`/students/${student.id}`, data);
+      onShowStudents(true);
     } catch (err) {
       toast.error('Student update failure');
     }
@@ -41,7 +34,6 @@ export default function StudenForm({
     } else {
       registerStudent(data);
     }
-    handleReturn();
   }
 
   return (
@@ -50,7 +42,7 @@ export default function StudenForm({
         <Header>
           <strong>{student ? 'Edit student' : 'Register student'}</strong>
           <aside>
-            <button type="button" isgray={_return} onClick={handleReturn}>
+            <button type="button" isgray={_return} onClick={onShowStudents}>
               RETURN
             </button>
             <button type="submit">SAVE</button>
@@ -84,6 +76,5 @@ export default function StudenForm({
 
 StudenForm.propType = {
   student: PropTypes.object,
-  onSetShowStudents: PropTypes.func.isRequired,
-  onSetStudentToEdit: PropTypes.func.isRequired,
+  onShowStudents: PropTypes.func.isRequired,
 };
