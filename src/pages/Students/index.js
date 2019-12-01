@@ -58,7 +58,7 @@ export default function Students() {
                   <th>E-MAIL</th>
                   <th>AGE</th>
                   <th />
-                  <th />
+                  <th id="delete-column" />
                 </tr>
               </thead>
               <tbody>
@@ -67,7 +67,7 @@ export default function Students() {
                     <td>{student.name}</td>
                     <td>{student.email}</td>
                     <td>{student.age}</td>
-                    <td>
+                    <td align="right">
                       <EditButton
                         type="button"
                         onClick={() => handleEditStudent(student)}
@@ -75,7 +75,7 @@ export default function Students() {
                         edit
                       </EditButton>
                     </td>
-                    <td>
+                    <td align="left">
                       <DeleteButton
                         type="button"
                         onClick={() => handleDeleteStudent(student.id)}
