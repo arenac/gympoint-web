@@ -46,15 +46,20 @@ export const Content = styled.div`
 
 export const StudentTable = styled.table`
   width: 100%;
+  padding: 12px 30px 5px 12px;
 
   thead th {
     text-align: left;
-    padding: 12px 50px 5px 12px;
+    padding: 12px 2px 5px 2px;
   }
 
   tbody td {
-    padding: 12px 50px 5px 12px;
+    padding: 12px 2px 5px 2px;
     border-bottom: 1px solid #eee;
+  }
+
+  th#delete-column {
+    width: 10px;
   }
 `;
 
