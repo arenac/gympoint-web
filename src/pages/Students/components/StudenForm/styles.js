@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
@@ -16,20 +16,24 @@ export const Header = styled.div`
     font-size: 20px;
   }
 
+  /*  */
   aside {
     button {
-      background: ${props => (props.isgray ? '#999' : '#de3b3b')};
       color: #fff;
       padding: 4px 15px;
       margin-right: 5px;
       border-radius: 4px;
       font-weight: bold;
-
-      &:hover {
-        background: ${props =>
-          props.isgray ? darken(0.05, '#999') : darken(0.05, '#de3b3b')};
-      }
     }
+  }
+`;
+
+export const Button = styled.button`
+  background: ${props => (props.isgray ? '#999' : '#de3b3b')};
+
+  &:hover {
+    background: ${props =>
+      props.isgray ? darken(0.05, '#999') : darken(0.08, '#de3b3b')};
   }
 `;
 
