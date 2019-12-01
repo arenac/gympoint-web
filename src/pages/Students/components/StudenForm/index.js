@@ -9,9 +9,8 @@ import {
   showStudents,
 } from '~/store/modules/student/actions';
 
-import { Container, Header, Content } from './styles';
+import { Container, Header, Content, Button } from './styles';
 
-const _return = true;
 export default function StudenForm({ student }) {
   const dispatch = useDispatch();
 
@@ -33,10 +32,10 @@ export default function StudenForm({ student }) {
         <Header>
           <strong>{student ? 'Edit student' : 'Register student'}</strong>
           <aside>
-            <button type="button" isgray={_return} onClick={handleReturn}>
+            <Button type="button" isgray onClick={handleReturn}>
               RETURN
-            </button>
-            <button type="submit">SAVE</button>
+            </Button>
+            <Button type="submit">SAVE</Button>
           </aside>
         </Header>
         <Content>
