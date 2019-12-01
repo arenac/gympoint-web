@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
 import api from '~/services/api';
 import StudentForm from './components/StudenForm';
+
+import {
+  getRequest,
+  showStudents,
+  deleteRequest,
+} from '~/store/modules/student/actions';
 
 import {
   Container,
@@ -13,40 +19,27 @@ import {
 } from './styles';
 
 export default function Students() {
-  const [students, setStudents] = useState([]);
-  const [showStudents, setShowStudents] = useState(true);
+  const dispatch = useDispatch();
+  const studentState = useSelector(state => state.student);
   const [studentToEdit, setStudentToEdit] = useState(null);
-
-  async function fetchStudents() {
-    const response = await api.get('students');
-
-    setStudents(response.data);
-  }
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetchStudents();
-  }, [showStudents, setShowStudents]);
+    dispatch(getRequest(page));
+  }, [dispatch, page]);
 
   function handleEditStudent(student) {
     setStudentToEdit(student);
-    setShowStudents(false);
+    dispatch(showStudents(false));
   }
 
-  function handleShowStudents(refresh) {
-    setShowStudents(true);
-    setStudentToEdit(null);
-    if (refresh) {
-      fetchStudents();
-    }
-  }
-
-  async function handleDeleteStudent(id) {
-    await api.delete(`/students/${id}`);
+  function handleDeleteStudent(id) {
+    dispatch(deleteRequest(id));
   }
 
   return (
     <Container>
-      {showStudents ? (
+      {studentState.show ? (
         <>
           <Header>
             <strong>Stundent List</strong>
@@ -69,7 +62,7 @@ export default function Students() {
                 </tr>
               </thead>
               <tbody>
-                {students.map(student => (
+                {studentState.students.map(student => (
                   <tr key={student.id}>
                     <td>{student.name}</td>
                     <td>{student.email}</td>
@@ -97,10 +90,7 @@ export default function Students() {
           </Content>
         </>
       ) : (
-        <StudentForm
-          student={studentToEdit}
-          onShowStudents={handleShowStudents}
-        />
+        <StudentForm student={studentToEdit} />
       )}
     </Container>
   );
