@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import logo from '~/assets/logo.svg';
 
 import { Container, Content, MenuItem } from './styles';
 
-export default function Header() {
+export default function Header({ location }) {
+  const [currentMenu, setCurrentMenu] = useState(
+    location.pathname.replace('/', '')
+  );
+
   const [menuItems, setMenuItems] = useState([
     {
       name: 'students',
@@ -24,13 +29,18 @@ export default function Header() {
     },
   ]);
 
-  function handleSelected({ name }) {
+  useEffect(() => {
     const selected = menuItems.map(i =>
-      i.name === name
+      i.name === currentMenu
         ? { name: i.name, selected: true }
         : { name: i.name, selected: false }
     );
     setMenuItems(selected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentMenu]);
+
+  function handleCurrentMenu(name) {
+    setCurrentMenu(name);
   }
 
   return (
@@ -46,7 +56,7 @@ export default function Header() {
               key={item.name}
               to={`/${item.name}`}
               selected={item.selected}
-              onClick={() => handleSelected(item)}
+              onClick={() => handleCurrentMenu(item.name)}
             >
               {item.name}
             </MenuItem>
@@ -60,3 +70,7 @@ export default function Header() {
     </Container>
   );
 }
+
+Header.propTypes = {
+  location: PropTypes.objectOf(PropTypes.object).isRequired,
+};
