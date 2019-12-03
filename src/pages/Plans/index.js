@@ -12,7 +12,7 @@ import {
   Container,
   Header,
   Content,
-  StudentTable,
+  PlanTable,
   EditButton,
   DeleteButton,
 } from './styles';
@@ -49,7 +49,7 @@ export default function Plans() {
             </aside>
           </Header>
           <Content>
-            <StudentTable>
+            <PlanTable>
               <thead>
                 <tr>
                   <th>TITLE</th>
@@ -63,8 +63,12 @@ export default function Plans() {
                 {planState.plans.map(plan => (
                   <tr key={plan.id}>
                     <td>{plan.title}</td>
-                    <td>{plan.duration}</td>
-                    <td>{plan.price}</td>
+                    <td>
+                      {plan.duration === 1
+                        ? `${plan.duration} month`
+                        : `${plan.duration} months`}
+                    </td>
+                    <td>{plan.priceFormated}</td>
                     <td align="right">
                       <EditButton
                         type="button"
@@ -84,11 +88,11 @@ export default function Plans() {
                   </tr>
                 ))}
               </tbody>
-            </StudentTable>
+            </PlanTable>
           </Content>
         </>
       ) : (
-        <PlanForm student={planToEdit} />
+        <PlanForm plan={planToEdit} />
       )}
     </Container>
   );

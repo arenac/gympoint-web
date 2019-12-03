@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  flex: 1;
+  vertical-align: center;
   padding: 30px 70px;
+  max-width: 900px;
 `;
 
 export const Header = styled.div`
@@ -38,7 +39,7 @@ export const Content = styled.div`
   border-radius: 4px;
 `;
 
-export const StudentTable = styled.table`
+export const PlanTable = styled.table`
   width: 100%;
   padding: 12px 30px 5px 12px;
 
