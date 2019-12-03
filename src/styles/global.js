@@ -25,7 +25,7 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
-  body, input, button {
+  body, input, button, select {
     font: 14px;
     font: 14px 'Roboto', sans-serif;
   }
@@ -41,4 +41,11 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
 `;
