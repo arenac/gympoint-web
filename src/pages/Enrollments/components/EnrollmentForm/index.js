@@ -75,13 +75,6 @@ export default function EnrollmentForm({ enrollment }) {
                 ]}
                 value={plan}
               />
-              {/* <InputText
-                name="plan"
-                type="number"
-                value={plan}
-                placeholder="Select a plan"
-                label="PLAN"
-              /> */}
             </div>
             <div>
               <InputText
