@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { darken } from 'polished';
+import { Input } from '@rocketseat/unform';
 
 export const Container = styled.div`
   flex: 1;
@@ -58,6 +59,12 @@ export const Content = styled.div`
     margin-right: 10px;
   }
 
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   div {
     flex: 1;
     display: flex;
@@ -69,4 +76,8 @@ export const Content = styled.div`
       flex-direction: column;
     }
   }
+`;
+
+export const InputText = styled(Input)`
+  background: ${props => (props.disabled ? '#eee' : '#fff')};
 `;
