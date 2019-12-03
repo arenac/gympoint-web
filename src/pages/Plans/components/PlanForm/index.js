@@ -6,14 +6,13 @@ import { Form } from '@rocketseat/unform';
 import {
   registerRequest,
   updateRequest,
-  showStudents,
+  showPlans,
 } from '~/store/modules/plan/actions';
 import { formatPrice } from '~/utils/format';
 
 import { Container, Header, Content, Button, InputText } from './styles';
 
 export default function PlanForm({ plan }) {
-  console.tron.log(plan);
   const dispatch = useDispatch();
   const [total, setTotal] = useState(0);
   const [price, setPrice] = useState(0);
@@ -41,7 +40,7 @@ export default function PlanForm({ plan }) {
   }
 
   function handleReturn() {
-    dispatch(showStudents(true));
+    dispatch(showPlans(true));
   }
 
   return (
@@ -57,28 +56,34 @@ export default function PlanForm({ plan }) {
           </aside>
         </Header>
         <Content>
-          <label htmlFor="title">PLAN TITLE</label>
-          <InputText name="title" />
+          <InputText name="title" placeholder="Plan title" label="PLAN TITLE" />
           <div>
             <div>
-              <label htmlFor="duration">DURATION</label>
               <InputText
                 name="duration"
                 type="number"
+                placeholder="Duration (month)"
                 onChange={event => setDuration(event.target.value)}
+                label="DURATION"
               />
             </div>
             <div>
-              <label htmlFor="price">MONTHLY PRICE</label>
               <InputText
                 name="price"
                 type="number"
+                placeholder="$ / month"
                 onChange={event => setPrice(event.target.value)}
+                label="MONTHLY PRICE"
               />
             </div>
             <div>
-              <label htmlFor="total">TOTAL PRICE</label>
-              <InputText name="total" type="text" disabled value={total} />
+              <InputText
+                name="total"
+                type="text"
+                disabled
+                value={total}
+                label="TOTAL PRICE"
+              />
             </div>
           </div>
         </Content>

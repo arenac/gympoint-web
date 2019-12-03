@@ -4,7 +4,7 @@ import PlanForm from './components/PlanForm';
 
 import {
   getRequest,
-  showStudents,
+  showPlans,
   deleteRequest,
 } from '~/store/modules/plan/actions';
 
@@ -29,7 +29,7 @@ export default function Plans() {
 
   function handleEditStudent(student) {
     setPlanToEdit(student);
-    dispatch(showStudents(false));
+    dispatch(showPlans(false));
   }
 
   function handleDeleteStudent(id) {
