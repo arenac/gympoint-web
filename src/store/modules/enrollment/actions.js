@@ -5,24 +5,24 @@ export function getRequest(page) {
   };
 }
 
-export function responseSuccess(plans) {
+export function responseSuccess(enrollments) {
   return {
     type: '@enrollment/RESPONSE_SUCCESS',
-    payload: { plans },
+    payload: { enrollments },
   };
 }
 
-export function registerRequest(plan) {
+export function registerRequest(enrollment) {
   return {
     type: '@enrollment/REGISTER_REQUEST',
-    payload: { plan },
+    payload: { enrollment },
   };
 }
 
-export function updateRequest(id, plan) {
+export function updateRequest(id, enrollment) {
   return {
-    type: '@plenrollmentan/UPDATE_REQUEST',
-    payload: { id, plan },
+    type: '@enrollment/UPDATE_REQUEST',
+    payload: { id, enrollment },
   };
 }
 
@@ -39,7 +39,7 @@ export function requestFailure() {
   };
 }
 
-export function showStudents(show) {
+export function showEnrollments(show) {
   return {
     type: '@enrollment/SHOW_STUDENTS',
     payload: { show },
