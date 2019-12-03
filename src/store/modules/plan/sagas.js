@@ -46,7 +46,7 @@ export function* register({ payload }) {
     yield put(responseSuccess(data));
     toast.success('Plan resgitered');
   } catch (err) {
-    toast.error('Failure to register student');
+    toast.error('Failure to register a plan');
     yield put(requestFailure());
   }
 }
@@ -74,7 +74,7 @@ export function* update({ payload }) {
   }
 }
 
-export function* deleteStudent({ payload }) {
+export function* deletePlan({ payload }) {
   try {
     const { id } = payload;
 
@@ -94,5 +94,5 @@ export default all([
   takeLatest('@plan/GET_REQUEST', request),
   takeLatest('@plan/REGISTER_REQUEST', register),
   takeLatest('@plan/UPDATE_REQUEST', update),
-  takeLatest('@plan/DELETE_REQUEST', deleteStudent),
+  takeLatest('@plan/DELETE_REQUEST', deletePlan),
 ]);
