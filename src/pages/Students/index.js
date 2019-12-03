@@ -47,7 +47,7 @@ export default function Students() {
               <button type="button" onClick={() => handleEditStudent(null)}>
                 REGISTER
               </button>
-              <input type="text" />
+              <input type="text" placeholder="Student search" />
             </aside>
           </Header>
           <Content>

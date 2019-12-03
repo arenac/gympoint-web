@@ -39,7 +39,7 @@ export function requestFailure() {
   };
 }
 
-export function showStudents(show) {
+export function showPlans(show) {
   return {
     type: '@plan/SHOW_STUDENTS',
     payload: { show },

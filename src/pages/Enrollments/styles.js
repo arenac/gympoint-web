@@ -29,12 +29,6 @@ export const Header = styled.div`
         background: ${darken(0.05, '#de3b3b')};
       }
     }
-
-    input {
-      border-radius: 4px;
-      border: 1px solid #ddd;
-      padding: 4px 5px;
-    }
   }
 `;
 
@@ -44,7 +38,7 @@ export const Content = styled.div`
   border-radius: 4px;
 `;
 
-export const StudentTable = styled.table`
+export const EnrollmentTable = styled.table`
   width: 100%;
   padding: 12px 30px 5px 12px;
 
@@ -58,7 +52,7 @@ export const StudentTable = styled.table`
     border-bottom: 1px solid #eee;
   }
 
-  th#delete-column {
+  th#enrollment-delete-col {
     width: 10px;
   }
 `;

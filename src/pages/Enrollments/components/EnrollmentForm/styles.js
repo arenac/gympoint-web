@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { darken } from 'polished';
+import { Input } from '@rocketseat/unform';
 
 export const Container = styled.div`
   flex: 1;
@@ -38,19 +39,26 @@ export const Button = styled.button`
 `;
 
 export const Content = styled.div`
+  flex: 1;
   padding: 20px;
   background: #fff;
   border-radius: 4px;
 
-  flex: 1;
   display: grid;
 
   label {
-    margin: 10px 0 5px 0;
+    margin: 15px 0 5px 0;
     font-weight: bold;
   }
 
   input {
+    border-radius: 4px;
+    border: 1px solid #eee;
+    margin-right: 10px;
+    padding: 10px 7px;
+  }
+
+  select {
     border-radius: 4px;
     border: 1px solid #eee;
     margin-right: 10px;
@@ -68,4 +76,8 @@ export const Content = styled.div`
       flex-direction: column;
     }
   }
+`;
+
+export const InputText = styled(Input)`
+  background: ${props => (props.disabled ? '#eee' : '#fff')};
 `;

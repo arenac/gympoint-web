@@ -39,23 +39,33 @@ export default function StudenForm({ student }) {
           </aside>
         </Header>
         <Content>
-          <label htmlFor="name">FULL NAME</label>
-          <Input name="name" />
-          <label htmlFor="email">E-MAIL</label>
-          <Input name="email" />
+          <Input name="name" placeholder="Your name" label="FULL NAME" />
+          <Input
+            name="email"
+            type="email"
+            placeholder="your@email.com"
+            label="E-MAIL"
+          />
 
           <div>
             <div>
-              <label htmlFor="age">AGE</label>
-              <Input name="age" />
+              <Input name="age" type="number" placeholder="Age" label="AGE" />
             </div>
             <div>
-              <label htmlFor="weight">WEIGHT</label>
-              <Input name="weight" />
+              <Input
+                name="weight"
+                type="number"
+                placeholder="Wight (Kg)"
+                label="WEIGHT"
+              />
             </div>
             <div>
-              <label htmlFor="height">HEIGHT</label>
-              <Input name="height" />
+              <Input
+                name="height"
+                type="number"
+                placeholder="Height (m)"
+                label="HEIGHT"
+              />
             </div>
           </div>
         </Content>
