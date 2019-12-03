@@ -51,11 +51,10 @@ export const Content = styled.div`
   }
 
   input {
-    flex: 1;
-    height: 25px;
     border-radius: 4px;
     border: 1px solid #eee;
     margin-right: 10px;
+    padding: 10px 7px;
   }
 
   div {
