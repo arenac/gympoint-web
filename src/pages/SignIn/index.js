@@ -29,10 +29,18 @@ export default function SigIn() {
       <p>GYMPOINT</p>
 
       <Form schema={schema} onSubmit={handleSubmit}>
-        <label htmlFor="email">YOUR EMAIL</label>
-        <Input name="email" type="email" placeholder="example@email.com" />
-        <label htmlFor="password">YOUR PASSWORD</label>
-        <Input name="password" type="password" placeholder="*************" />
+        <Input
+          name="email"
+          label="YOUR EMAIL"
+          type="email"
+          placeholder="example@email.com"
+        />
+        <Input
+          name="password"
+          label="YOUR PASSWORD"
+          type="password"
+          placeholder="*************"
+        />
 
         <button type="submit">Log In</button>
       </Form>
