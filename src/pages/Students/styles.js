@@ -33,7 +33,7 @@ export const Header = styled.div`
     input {
       border-radius: 4px;
       border: 1px solid #ddd;
-      padding: 4px 15px;
+      padding: 4px 5px;
     }
   }
 `;
