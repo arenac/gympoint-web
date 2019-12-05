@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { darken } from 'polished';
-import { Input } from '@rocketseat/unform';
+import { Input, Select } from '@rocketseat/unform';
 
 export const Container = styled.div`
   flex: 1;
@@ -58,13 +58,6 @@ export const Content = styled.div`
     padding: 10px 7px;
   }
 
-  select {
-    border-radius: 4px;
-    border: 1px solid #eee;
-    margin-right: 10px;
-    padding: 10px 7px;
-  }
-
   div {
     flex: 1;
     display: flex;
@@ -80,4 +73,11 @@ export const Content = styled.div`
 
 export const InputText = styled(Input)`
   background: ${props => (props.disabled ? '#eee' : '#fff')};
+`;
+
+export const DropDown = styled(Select)`
+  background: none;
+  border: 1px solid #eee;
+  margin-right: 10px;
+  padding: 10px 7px;
 `;
