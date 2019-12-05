@@ -11,9 +11,6 @@ import { Container, Content, MenuItem } from './styles';
 export default function Header({ location }) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
-  const [currentMenu, setCurrentMenu] = useState(
-    location.pathname.replace('/', '')
-  );
 
   const [menuItems, setMenuItems] = useState([
     {
@@ -35,18 +32,15 @@ export default function Header({ location }) {
   ]);
 
   useEffect(() => {
+    console.tron.log(location.pathname);
     const selected = menuItems.map(i =>
-      i.name === currentMenu
+      location.pathname.includes(i.name)
         ? { name: i.name, selected: true }
         : { name: i.name, selected: false }
     );
     setMenuItems(selected);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentMenu]);
-
-  function handleCurrentMenu(name) {
-    setCurrentMenu(name);
-  }
+  }, [location.pathname]);
 
   function handleSignOut() {
     dispatch(signOut());
@@ -65,7 +59,6 @@ export default function Header({ location }) {
               key={item.name}
               to={`/${item.name}`}
               selected={item.selected}
-              onClick={() => handleCurrentMenu(item.name)}
             >
               {item.name}
             </MenuItem>
