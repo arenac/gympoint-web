@@ -17,7 +17,7 @@ export const Header = styled.div`
   }
 
   aside {
-    button {
+    a {
       background: #de3b3b;
       color: #fff;
       padding: 4px 15px;
