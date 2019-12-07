@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import { addMonths, format, parseISO } from 'date-fns';
+import en from 'date-fns/locale/en-US';
 import { Form, Input } from '@rocketseat/unform';
 
 import ReactSelect from '../components/ReactSelect';
@@ -9,27 +10,58 @@ import ReactAsyncSelect from '../components/ReactAsyncSelect';
 import DatePicker from '../components/DatePicker';
 
 import api from '~/services/api';
+import { formatPrice } from '~/utils/format';
+
+import { updateRequest } from '~/store/modules/enrollment/actions';
 
 import { Container, Header, Content, Label, ControlElement } from './styles';
 
-export default function EnrollmentEdit({ enrollment }) {
+export default function EnrollmentEdit({ history }) {
   const dispatch = useDispatch();
   const [plans, setPlans] = useState([]);
   const [priceFormated, setPriceFormated] = useState();
-  const [choosedPlan, setChoosedPlan] = useState();
+  const [choosedPlan, setChoosedPlan] = useState('');
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState();
 
-  const enrollmentPrevious = '';
+  const enrollmentPrevious = history.location.state.enrollment;
 
   useEffect(() => {
     async function loadlans() {
       const response = await api.get('plans');
+
+      const _plan = response.data.find(
+        plan => plan.id === enrollmentPrevious.plan_id
+      );
+      setChoosedPlan(_plan);
       setPlans(response.data);
     }
+    setStartDate(enrollmentPrevious.start_date);
+    setPriceFormated(formatPrice(enrollmentPrevious.price));
 
     loadlans();
-  }, [setPlans]);
+  }, [
+    enrollmentPrevious.plan_id,
+    enrollmentPrevious.price,
+    enrollmentPrevious.start_date,
+  ]);
+
+  const endDate = useMemo(() => {
+    if (choosedPlan !== '' && startDate !== null) {
+      const endDateFormatted = addMonths(startDate, choosedPlan.duration);
+
+      setPriceFormated(formatPrice(choosedPlan.price * choosedPlan.duration));
+
+      return format(endDateFormatted, "dd'/'MM'/'Y", { locale: en });
+    }
+
+    if (enrollmentPrevious && choosedPlan === '') {
+      return format(parseISO(enrollmentPrevious.end_date), "dd'/'MM'/'Y", {
+        locale: en,
+      });
+    }
+
+    return '';
+  }, [choosedPlan, enrollmentPrevious, startDate]);
 
   const filterStudents = inputValue => {
     async function loadStudents() {
@@ -49,12 +81,16 @@ export default function EnrollmentEdit({ enrollment }) {
     });
 
   function handleSubmit(data) {
-    console.tron.log(data);
+    dispatch(updateRequest(enrollmentPrevious.id, data));
   }
 
   return (
     <Container>
-      <Form id="student-form" initialData={enrollment} onSubmit={handleSubmit}>
+      <Form
+        id="student-form"
+        initialData={enrollmentPrevious}
+        onSubmit={handleSubmit}
+      >
         <Header>
           <strong>Edit a enrollment</strong>
           <aside>
@@ -88,7 +124,7 @@ export default function EnrollmentEdit({ enrollment }) {
                   classNamePrefix="select"
                   onChange={plan => setChoosedPlan(plan)}
                   options={plans}
-                  defaultValue={enrollmentPrevious}
+                  defaultValue={enrollmentPrevious.plan}
                 />
               </div>
             </ControlElement>

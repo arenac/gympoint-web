@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  flex: 1;
   padding: 30px 70px;
+  max-width: 1300px;
+  height: auto;
 `;
 
 export const Header = styled.div`
@@ -40,7 +41,6 @@ export const Content = styled.div`
 
 export const EnrollmentTable = styled.table`
   width: 100%;
-  padding: 12px 30px 5px 12px;
 
   thead th {
     text-align: left;
@@ -50,6 +50,14 @@ export const EnrollmentTable = styled.table`
   tbody td {
     padding: 12px 2px 5px 2px;
     border-bottom: 1px solid #eee;
+  }
+
+  thead th.alignCenter {
+    text-align: center !important;
+  }
+
+  tbody td.alignCenter {
+    text-align: center;
   }
 
   th#enrollment-delete-col {
