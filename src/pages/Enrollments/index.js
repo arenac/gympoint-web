@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { format, parseISO } from 'date-fns';
+import en from 'date-fns/locale/en-US';
 
 import api from '~/services/api';
 import { deleteRequest } from '~/store/modules/enrollment/actions';
@@ -10,29 +13,49 @@ import {
   Header,
   Content,
   EnrollmentTable,
-  EditButton,
   DeleteButton,
 } from './styles';
 
 export default function Enrollments() {
   const dispatch = useDispatch();
-  const enrollmentState = useSelector(state => state.enrollment);
   const [enrollments, setEnrollments] = useState([]);
-  const [enrollmentToEdit, setEnrollmentToEdit] = useState(null);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    // dispatch(getRequest(page));
     async function fetchData() {
-      const response = await api.get('enrollments');
+      const response = await api.get(`enrollments?page=${page}`);
 
-      setEnrollments(response.data);
+      const data = response.data.map(enrollment => {
+        return {
+          ...enrollment,
+          plan_id: enrollment.plan.id,
+          // student_id :enrollment.student.id,
+          start_date: parseISO(enrollment.start_date),
+
+          startDateFormatted: format(
+            parseISO(enrollment.start_date),
+            "dd'-'MMMM'-'Y",
+            { locale: en }
+          ),
+
+          endDateFormatted: format(
+            parseISO(enrollment.end_date),
+            "dd'-'MMMM'-'Y",
+            { locale: en }
+          ),
+        };
+      });
+
+      setEnrollments(data);
     }
     fetchData();
-  }, []);
+  }, [page]);
 
   function handleDeleteStudent(id) {
     dispatch(deleteRequest(id));
+
+    const _enrollments = enrollments.filter(item => item.id !== id);
+    setEnrollments(_enrollments);
   }
 
   return (
@@ -48,10 +71,10 @@ export default function Enrollments() {
           <thead>
             <tr>
               <th>STUDENT</th>
-              <th>PLAN</th>
-              <th>START</th>
-              <th>END</th>
-              <th>ACTIVE</th>
+              <th className="alignCenter">PLAN</th>
+              <th className="alignCenter">START</th>
+              <th className="alignCenter">END</th>
+              <th className="alignCenter">ACTIVE</th>
               <th />
               <th id="enrollment-delete-col" />
             </tr>
@@ -60,10 +83,12 @@ export default function Enrollments() {
             {enrollments.map(enrollment => (
               <tr key={enrollment.id}>
                 <td>{enrollment.student ? enrollment.student.name : ''}</td>
-                <td>{enrollment.plan ? enrollment.plan.title : ''}</td>
-                <td>{enrollment.start_date}</td>
-                <td>{enrollment.end_date}</td>
-                <td>{enrollment.active}</td>
+                <td className="alignCenter">
+                  {enrollment.plan ? enrollment.plan.title : ''}
+                </td>
+                <td className="alignCenter">{enrollment.startDateFormatted}</td>
+                <td className="alignCenter">{enrollment.endDateFormatted}</td>
+                <td className="alignCenter">{enrollment.active}</td>
                 <td align="right">
                   <Link
                     to={{
