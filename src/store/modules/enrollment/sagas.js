@@ -3,20 +3,7 @@ import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 
-import { responseSuccess, requestFailure } from './actions';
-
-export function* request({ payload }) {
-  try {
-    const { page } = payload;
-
-    const response = yield call(api.get, `enrollments?page=${page}`);
-
-    yield put(responseSuccess(response.data));
-  } catch (err) {
-    toast.error('Failure to fetch enrollments');
-    yield put(requestFailure());
-  }
-}
+import { requestSuccess, requestFailure } from './actions';
 
 export function* register({ payload }) {
   try {
@@ -24,9 +11,7 @@ export function* register({ payload }) {
 
     yield call(api.post, 'enrollments', enrollment);
 
-    const response = yield call(api.get, 'enrollments');
-
-    yield put(responseSuccess(response.data));
+    yield put(requestSuccess());
     toast.success('Enrollment resgitered');
   } catch (err) {
     toast.error('Failure to register enrollment');
@@ -40,9 +25,8 @@ export function* update({ payload }) {
 
     yield call(api.put, `enrollments/${id}`, enrollment);
 
-    const response = yield call(api.get, 'enrollments');
+    yield put(requestSuccess());
 
-    yield put(responseSuccess(response.data));
     toast.success('Enrollment updated');
   } catch (err) {
     toast.error('Failure to update a enrollment');
@@ -56,9 +40,8 @@ export function* deleteEnrollment({ payload }) {
 
     yield call(api.delete, `enrollments/${id}`);
 
-    const response = yield call(api.get, 'enrollments');
+    yield put(requestSuccess());
 
-    yield put(responseSuccess(response.data));
     toast.warn('Enrollment deleted');
   } catch (err) {
     toast.error('Failure to register a enrollment');
