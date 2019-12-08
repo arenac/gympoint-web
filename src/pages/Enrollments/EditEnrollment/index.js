@@ -26,7 +26,7 @@ export default function EnrollmentEdit({ history }) {
   const enrollmentPrevious = history.location.state.enrollment;
 
   useEffect(() => {
-    async function loadlans() {
+    async function loadPlans() {
       const response = await api.get('plans');
 
       const _plan = response.data.find(
@@ -38,7 +38,7 @@ export default function EnrollmentEdit({ history }) {
     setStartDate(enrollmentPrevious.start_date);
     setPriceFormated(formatPrice(enrollmentPrevious.price));
 
-    loadlans();
+    loadPlans();
   }, [
     enrollmentPrevious.plan_id,
     enrollmentPrevious.price,
@@ -86,11 +86,7 @@ export default function EnrollmentEdit({ history }) {
 
   return (
     <Container>
-      <Form
-        id="student-form"
-        initialData={enrollmentPrevious}
-        onSubmit={handleSubmit}
-      >
+      <Form initialData={enrollmentPrevious} onSubmit={handleSubmit}>
         <Header>
           <strong>Edit a enrollment</strong>
           <aside>
