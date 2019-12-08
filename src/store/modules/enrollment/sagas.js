@@ -7,7 +7,7 @@ import { requestSuccess, requestFailure } from './actions';
 
 export function* register({ payload }) {
   try {
-    const { enrollment } = payload.plan;
+    const { enrollment } = payload;
 
     yield call(api.post, 'enrollments', enrollment);
 
@@ -50,7 +50,6 @@ export function* deleteEnrollment({ payload }) {
 }
 
 export default all([
-  takeLatest('@enrollment/GET_REQUEST', request),
   takeLatest('@enrollment/REGISTER_REQUEST', register),
   takeLatest('@enrollment/UPDATE_REQUEST', update),
   takeLatest('@enrollment/DELETE_REQUEST', deleteEnrollment),

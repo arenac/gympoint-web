@@ -33,7 +33,7 @@ export default function RegisterEnrollment() {
   }, []);
 
   const endDate = useMemo(() => {
-    if (choosedPlan !== '' && startDate !== null) {
+    if (choosedPlan !== '' && startDate !== '') {
       const endDateFormatted = addMonths(startDate, choosedPlan.duration);
 
       setPriceFormated(formatPrice(choosedPlan.price * choosedPlan.duration));

@@ -1,7 +1,6 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-  enrollments: [],
   loading: false,
   show: true,
 };

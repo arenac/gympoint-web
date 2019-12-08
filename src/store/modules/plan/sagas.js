@@ -60,7 +60,6 @@ export function* deletePlan({ payload }) {
 }
 
 export default all([
-  takeLatest('@plan/GET_REQUEST', request),
   takeLatest('@plan/REGISTER_REQUEST', register),
   takeLatest('@plan/UPDATE_REQUEST', update),
   takeLatest('@plan/DELETE_REQUEST', deletePlan),
