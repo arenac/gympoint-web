@@ -1,17 +1,3 @@
-export function getRequest(page) {
-  return {
-    type: '@student/GET_REQUEST',
-    payload: { page },
-  };
-}
-
-export function responseSuccess(students) {
-  return {
-    type: '@student/RESPONSE_SUCCESS',
-    payload: { students },
-  };
-}
-
 export function registerRequest(student) {
   return {
     type: '@student/REGISTER_REQUEST',
@@ -33,15 +19,14 @@ export function deleteRequest(id) {
   };
 }
 
-export function requestFailure() {
+export function requestSuccess() {
   return {
-    type: '@student/REQUEST_FAILURE',
+    type: '@student/REQUEST_SUCCESS',
   };
 }
 
-export function showStudents(show) {
+export function requestFailure() {
   return {
-    type: '@student/SHOW_STUDENTS',
-    payload: { show },
+    type: '@student/REQUEST_FAILURE',
   };
 }
