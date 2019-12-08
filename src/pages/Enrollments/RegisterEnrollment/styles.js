@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import { Input } from '@rocketseat/unform';
 
 export const Container = styled.div`
-  flex: 1;
   padding: 30px 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Header = styled.div`
@@ -64,6 +66,10 @@ export const Content = styled.div`
   div.editColumn {
     display: flex;
     flex-direction: row;
+
+    label {
+      display: block;
+    }
 
     div.selectElement {
       width: 180px;

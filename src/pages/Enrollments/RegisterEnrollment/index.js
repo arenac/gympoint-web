@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import { addMonths, format } from 'date-fns';
+import en from 'date-fns/locale/en-US';
 import { Form, Input } from '@rocketseat/unform';
 
 import ReactSelect from '../components/ReactSelect';
@@ -9,6 +10,9 @@ import ReactAsyncSelect from '../components/ReactAsyncSelect';
 import DatePicker from '../components/DatePicker';
 
 import api from '~/services/api';
+import { formatPrice } from '~/utils/format';
+
+import { registerRequest } from '~/store/modules/enrollment/actions';
 
 import { Container, Header, Content, Label, ControlElement } from './styles';
 
@@ -18,7 +22,6 @@ export default function RegisterEnrollment() {
   const [choosedPlan, setChoosedPlan] = useState('');
   const [priceFormated, setPriceFormated] = useState('');
   const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
     async function loadlans() {
@@ -28,6 +31,18 @@ export default function RegisterEnrollment() {
 
     loadlans();
   }, []);
+
+  const endDate = useMemo(() => {
+    if (choosedPlan !== '' && startDate !== null) {
+      const endDateFormatted = addMonths(startDate, choosedPlan.duration);
+
+      setPriceFormated(formatPrice(choosedPlan.price * choosedPlan.duration));
+
+      return format(endDateFormatted, "dd'/'MM'/'Y", { locale: en });
+    }
+
+    return '';
+  }, [choosedPlan, startDate]);
 
   const filterStudents = inputValue => {
     async function loadStudents() {
@@ -43,15 +58,16 @@ export default function RegisterEnrollment() {
     new Promise(resolve => {
       setTimeout(() => {
         resolve(filterStudents(inputValue));
-      }, 1000);
+      }, 200);
     });
+
   function handleSubmit(data) {
-    console.tron.log(data);
+    dispatch(registerRequest(data));
   }
 
   return (
     <Container>
-      <Form id="student-form" onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Header>
           <strong>Edit a enrollment</strong>
           <aside>
