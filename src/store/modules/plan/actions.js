@@ -1,17 +1,3 @@
-export function getRequest(page) {
-  return {
-    type: '@plan/GET_REQUEST',
-    payload: { page },
-  };
-}
-
-export function responseSuccess(plans) {
-  return {
-    type: '@plan/RESPONSE_SUCCESS',
-    payload: { plans },
-  };
-}
-
 export function registerRequest(plan) {
   return {
     type: '@plan/REGISTER_REQUEST',
@@ -33,15 +19,14 @@ export function deleteRequest(id) {
   };
 }
 
-export function requestFailure() {
+export function requestSuccess() {
   return {
-    type: '@plan/REQUEST_FAILURE',
+    type: '@plan/REQUEST_SUCCESS',
   };
 }
 
-export function showPlans(show) {
+export function requestFailure() {
   return {
-    type: '@plan/SHOW_STUDENTS',
-    payload: { show },
+    type: '@plan/REQUEST_FAILURE',
   };
 }
