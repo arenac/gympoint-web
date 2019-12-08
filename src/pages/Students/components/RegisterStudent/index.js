@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 
-import { updateRequest } from '~/store/modules/student/actions';
+import { registerRequest } from '~/store/modules/student/actions';
 
 import { Container, Header, Content, ControlElement } from './styles';
 
@@ -11,7 +11,7 @@ export default function EditStudent() {
   const dispatch = useDispatch();
 
   function handleSubmit(data) {
-    dispatch(updateRequest(data));
+    dispatch(registerRequest(data));
   }
 
   return (
