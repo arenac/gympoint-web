@@ -54,13 +54,34 @@ export const Content = styled.div`
   padding: 20px;
   background: #fff;
 
-  div.selectStudent {
-    margin-top: 8px;
+  label {
+    font-weight: bold;
+  }
+
+  input {
+    margin-top: 8px !important;
+    padding: 0 15px;
+    margin: 0 0 10px;
+    height: 37px;
+    width: 100%;
+
+    border-radius: 4px;
+    border: 1px solid #ddd;
+
+    background: #fff;
+
+    &::placeholder {
+      color: #999;
+    }
   }
 
   div.editRow {
     display: flex;
     flex-direction: column;
+
+    label {
+      display: block;
+    }
   }
 
   div.editColumn {
@@ -77,28 +98,6 @@ export const Content = styled.div`
 
       input {
         height: 1px;
-      }
-    }
-
-    label {
-      margin: 15px 0 5px 0;
-      font-weight: bold;
-    }
-
-    input {
-      margin-top: 8px !important;
-      padding: 0 15px;
-      margin: 0 0 10px;
-      height: 37px;
-      width: 100%;
-
-      border-radius: 4px;
-      border: 1px solid #ddd;
-
-      background: #fff;
-
-      &::placeholder {
-        color: #999;
       }
     }
 

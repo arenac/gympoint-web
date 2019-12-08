@@ -3,20 +3,7 @@ import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 
-import { responseSuccess, requestFailure } from './actions';
-
-export function* request({ payload }) {
-  try {
-    const { page } = payload;
-
-    const response = yield call(api.get, `students?page=${page}`);
-
-    yield put(responseSuccess(response.data));
-  } catch (err) {
-    toast.error('Failure to fetch students');
-    yield put(requestFailure());
-  }
-}
+import { requestSuccess, requestFailure } from './actions';
 
 export function* register({ payload }) {
   try {
@@ -24,9 +11,7 @@ export function* register({ payload }) {
 
     yield call(api.post, 'students', student);
 
-    const response = yield call(api.get, 'students');
-
-    yield put(responseSuccess(response.data));
+    yield put(requestSuccess());
     toast.success('Student resgitered');
   } catch (err) {
     toast.error('Failure to register student');
@@ -40,9 +25,8 @@ export function* update({ payload }) {
 
     yield call(api.put, `students/${id}`, student);
 
-    const response = yield call(api.get, 'students');
+    yield put(requestSuccess());
 
-    yield put(responseSuccess(response.data));
     toast.success('Student updated');
   } catch (err) {
     toast.error('Failure to update student');
@@ -56,10 +40,9 @@ export function* deleteStudent({ payload }) {
 
     yield call(api.delete, `students/${id}`);
 
-    const response = yield call(api.get, 'students');
+    yield put(requestSuccess());
 
-    yield put(responseSuccess(response.data));
-    toast.success('Student deleted');
+    toast.warn('Student deleted');
   } catch (err) {
     toast.error('Failure to register student');
     yield put(requestFailure());
@@ -67,7 +50,6 @@ export function* deleteStudent({ payload }) {
 }
 
 export default all([
-  takeLatest('@student/GET_REQUEST', request),
   takeLatest('@student/REGISTER_REQUEST', register),
   takeLatest('@student/UPDATE_REQUEST', update),
   takeLatest('@student/DELETE_REQUEST', deleteStudent),

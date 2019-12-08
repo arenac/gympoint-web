@@ -2,9 +2,12 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  vertical-align: center;
   padding: 30px 70px;
-  max-width: 900px;
+  margin: 25px;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  align-content: center;
 `;
 
 export const Header = styled.div`
@@ -18,7 +21,7 @@ export const Header = styled.div`
   }
 
   aside {
-    button {
+    a {
       background: #de3b3b;
       color: #fff;
       padding: 4px 15px;
@@ -51,17 +54,15 @@ export const PlanTable = styled.table`
   tbody td {
     padding: 12px 2px 5px 2px;
     border-bottom: 1px solid #eee;
+
+    a {
+      color: #4d85ee;
+    }
   }
 
   th#delete-column {
     width: 10px;
   }
-`;
-
-export const EditButton = styled.button`
-  color: #4d85ee;
-  background: none;
-  border: none;
 `;
 
 export const DeleteButton = styled.button`

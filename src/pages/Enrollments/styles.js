@@ -3,8 +3,11 @@ import { darken } from 'polished';
 
 export const Container = styled.div`
   padding: 30px 70px;
-  max-width: 1300px;
-  height: auto;
+  margin: 25px;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  align-content: center;
 `;
 
 export const Header = styled.div`
@@ -50,6 +53,10 @@ export const EnrollmentTable = styled.table`
   tbody td {
     padding: 12px 2px 5px 2px;
     border-bottom: 1px solid #eee;
+
+    a {
+      color: #4d85ee;
+    }
   }
 
   thead th.alignCenter {

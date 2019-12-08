@@ -32,7 +32,6 @@ export default function Header({ location }) {
   ]);
 
   useEffect(() => {
-    console.tron.log(location.pathname);
     const selected = menuItems.map(i =>
       location.pathname.includes(i.name)
         ? { name: i.name, selected: true }

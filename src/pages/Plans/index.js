@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import PlanForm from './components/PlanForm';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import {
-  getRequest,
-  showPlans,
-  deleteRequest,
-} from '~/store/modules/plan/actions';
+import { formatPrice } from '~/utils/format';
+
+import api from '~/services/api';
+
+import { deleteRequest } from '~/store/modules/plan/actions';
 
 import {
   Container,
@@ -19,81 +19,88 @@ import {
 
 export default function Plans() {
   const dispatch = useDispatch();
-  const planState = useSelector(state => state.plan);
-  const [planToEdit, setPlanToEdit] = useState(null);
+  const [plans, setPlans] = useState([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(getRequest(page));
-  }, [dispatch, page]);
+    async function fetchData() {
+      const response = await api.get(`plans?page=${page}`);
 
-  function handleEditStudent(student) {
-    setPlanToEdit(student);
-    dispatch(showPlans(false));
-  }
+      const data = response.data.map(plan => {
+        return {
+          ...plan,
+          priceFormated: formatPrice(plan.price),
+        };
+      });
 
-  function handleDeleteStudent(id) {
+      setPlans(data);
+    }
+
+    fetchData();
+  }, [page]);
+
+  function handleDeletePlan(id) {
     dispatch(deleteRequest(id));
+
+    const _plans = plans.filter(plan => plan.id !== id);
+
+    setPlans(_plans);
   }
 
   return (
     <Container>
-      {planState.show ? (
-        <>
-          <Header>
-            <strong>Plan List</strong>
-            <aside>
-              <button type="button" onClick={() => handleEditStudent(null)}>
-                REGISTER
-              </button>
-            </aside>
-          </Header>
-          <Content>
-            <PlanTable>
-              <thead>
-                <tr>
-                  <th>TITLE</th>
-                  <th>DURATION</th>
-                  <th>PRICE</th>
-                  <th />
-                  <th id="delete-column" />
-                </tr>
-              </thead>
-              <tbody>
-                {planState.plans.map(plan => (
-                  <tr key={plan.id}>
-                    <td>{plan.title}</td>
-                    <td>
-                      {plan.duration === 1
-                        ? `${plan.duration} month`
-                        : `${plan.duration} months`}
-                    </td>
-                    <td>{plan.priceFormated}</td>
-                    <td align="right">
-                      <EditButton
-                        type="button"
-                        onClick={() => handleEditStudent(plan)}
-                      >
-                        edit
-                      </EditButton>
-                    </td>
-                    <td align="left">
-                      <DeleteButton
-                        type="button"
-                        onClick={() => handleDeleteStudent(plan.id)}
-                      >
-                        delete
-                      </DeleteButton>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </PlanTable>
-          </Content>
-        </>
-      ) : (
-        <PlanForm plan={planToEdit} />
-      )}
+      <Header>
+        <strong>Plan List</strong>
+        <aside>
+          <Link to="/plans/register">REGISTER</Link>
+        </aside>
+      </Header>
+      <Content>
+        <PlanTable>
+          <thead>
+            <tr>
+              <th>TITLE</th>
+              <th>DURATION</th>
+              <th>PRICE</th>
+              <th />
+              <th id="delete-column" />
+            </tr>
+          </thead>
+          <tbody>
+            {plans.map(plan => (
+              <tr key={plan.id}>
+                <td>{plan.title}</td>
+                <td>
+                  {plan.duration === 1
+                    ? `${plan.duration} month`
+                    : `${plan.duration} months`}
+                </td>
+                <td>{plan.priceFormated}</td>
+                <td align="right">
+                  <Link
+                    to={{
+                      pathname: '/plans/edit',
+                      state: {
+                        plan,
+                      },
+                    }}
+                  >
+                    edit
+                  </Link>
+                </td>
+                <td align="left">
+                  <DeleteButton
+                    type="button"
+                    onClick={() => handleDeletePlan(plan.id)}
+                  >
+                    delete
+                  </DeleteButton>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </PlanTable>
+      </Content>
     </Container>
   );
 }

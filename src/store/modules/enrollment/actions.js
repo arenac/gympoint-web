@@ -1,17 +1,3 @@
-export function getRequest(page) {
-  return {
-    type: '@enrollment/GET_REQUEST',
-    payload: { page },
-  };
-}
-
-export function responseSuccess(enrollments) {
-  return {
-    type: '@enrollment/RESPONSE_SUCCESS',
-    payload: { enrollments },
-  };
-}
-
 export function registerRequest(enrollment) {
   return {
     type: '@enrollment/REGISTER_REQUEST',
@@ -33,15 +19,14 @@ export function deleteRequest(id) {
   };
 }
 
-export function requestFailure() {
+export function requestSuccess() {
   return {
-    type: '@enrollment/REQUEST_FAILURE',
+    type: '@enrollment/REQUEST_SUCCESS',
   };
 }
 
-export function showEnrollments(show) {
+export function requestFailure() {
   return {
-    type: '@enrollment/SHOW_STUDENTS',
-    payload: { show },
+    type: '@enrollment/REQUEST_FAILURE',
   };
 }

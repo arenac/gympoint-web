@@ -2,32 +2,8 @@ import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import api from '~/services/api';
-import { formatPrice } from '~/utils/format';
 
-import { responseSuccess, requestFailure } from './actions';
-
-function formatPlans(data) {
-  return data.map(plan => ({
-    ...plan,
-    priceFormated: formatPrice(plan.price),
-    totalFormated: formatPrice(plan.duration * plan.price),
-  }));
-}
-
-export function* request({ payload }) {
-  try {
-    const { page } = payload;
-
-    const response = yield call(api.get, `plans?page=${page}`);
-
-    const data = formatPlans(response.data);
-
-    yield put(responseSuccess(data));
-  } catch (err) {
-    toast.error('Failure to fetch plans');
-    yield put(requestFailure());
-  }
-}
+import { requestSuccess, requestFailure } from './actions';
 
 export function* register({ payload }) {
   try {
@@ -39,11 +15,8 @@ export function* register({ payload }) {
       price: parseFloat(price),
     });
 
-    const response = yield call(api.get, 'plans');
+    yield put(requestSuccess());
 
-    const data = formatPlans(response.data);
-
-    yield put(responseSuccess(data));
     toast.success('Plan resgitered');
   } catch (err) {
     toast.error('Failure to register a plan');
@@ -62,11 +35,8 @@ export function* update({ payload }) {
       price: parseFloat(price),
     });
 
-    const response = yield call(api.get, 'plans');
+    yield put(requestSuccess());
 
-    const data = formatPlans(response.data);
-
-    yield put(responseSuccess(data));
     toast.success('Plan updated');
   } catch (err) {
     toast.error('Failure to update a plan');
@@ -80,9 +50,8 @@ export function* deletePlan({ payload }) {
 
     yield call(api.delete, `plans/${id}`);
 
-    const response = yield call(api.get, 'plans');
+    yield put(requestSuccess());
 
-    yield put(responseSuccess(response.data));
     toast.warn('Plan deleted');
   } catch (err) {
     toast.error('Failure to register a plan');
@@ -91,7 +60,6 @@ export function* deletePlan({ payload }) {
 }
 
 export default all([
-  takeLatest('@plan/GET_REQUEST', request),
   takeLatest('@plan/REGISTER_REQUEST', register),
   takeLatest('@plan/UPDATE_REQUEST', update),
   takeLatest('@plan/DELETE_REQUEST', deletePlan),
