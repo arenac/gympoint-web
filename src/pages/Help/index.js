@@ -39,10 +39,12 @@ export default function Help() {
     });
   }
 
-  function removeHelpOrder(helpId) {
-    const _helps = helps.filter(item => item.id !== helpId);
+  function removeHelpFromList({ helpId = null }) {
+    if (helpId) {
+      const _helps = helps.filter(item => item.id !== helpId);
 
-    setHelps(_helps);
+      setHelps(_helps);
+    }
 
     setModalData({
       isOpen: false,
@@ -84,7 +86,7 @@ export default function Help() {
           isOpen={modalData.isOpen}
           question={modalData.question}
           idQuestion={modalData.idQuestion}
-          listHelpOrder={removeHelpOrder}
+          onRemoveHelpItem={removeHelpFromList}
         />
       )}
     </Container>

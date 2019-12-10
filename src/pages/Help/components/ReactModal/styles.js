@@ -5,7 +5,6 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: 10px;
 
   span {
     color: #ee4d64;
@@ -47,23 +46,6 @@ export const Container = styled.div`
     }
   }
 
-  button#closeButton {
-    background: none;
-    border: none;
-    width: 30px;
-    height: 30px;
-    align-self: flex-end;
-
-    img {
-      color: #ddd;
-      transition: backdround 0.2s;
-
-      &:hover {
-        color: ${darken(0.5, '#ddd')};
-      }
-    }
-  }
-
   button#answerButton {
     margin: 5px 0 0;
     height: 44px;
@@ -77,6 +59,28 @@ export const Container = styled.div`
 
     &:hover {
       background: ${darken(0.05, '#de3b3b')};
+    }
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  text-align: right;
+
+  button#closeButton {
+    background: none;
+    border: none;
+    width: 30px;
+    height: 30px;
+
+    img {
+      color: #ddd;
+      transition: backdround 0.2s;
+
+      &:hover {
+        color: ${darken(0.5, '#ddd')};
+      }
     }
   }
 `;

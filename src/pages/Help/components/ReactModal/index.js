@@ -4,15 +4,15 @@ import ReactModal from 'react-modal';
 import { Form, Input } from '@rocketseat/unform';
 import { MdClose } from 'react-icons/md';
 
-import { Container } from './styles';
+import { answerRequest } from '~/store/modules/help/actions';
+
+import { Container, ButtonContainer } from './styles';
 
 ReactModal.setAppElement('#root');
 
 export default function Modal(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [question, setQuestion] = useState('');
-
-  console.tron.log('modal', props);
 
   const dispatch = useDispatch();
 
@@ -21,12 +21,19 @@ export default function Modal(props) {
     setIsOpen(props.isOpen);
   }, [props]);
 
-  function closeModal() {
+  function closeModal({ answered = false }) {
     setIsOpen(false);
+    if (answered) {
+      props.onRemoveHelpItem(props.idQuestion);
+    } else {
+      props.onRemoveHelpItem({});
+    }
   }
 
   function handleSubmit(data) {
-    console.tron.log('answer student', data);
+    dispatch(answerRequest(props.idQuestion, data));
+    const answered = true;
+    closeModal({ answered });
   }
 
   return (
@@ -54,9 +61,11 @@ export default function Modal(props) {
       >
         <Form onSubmit={handleSubmit}>
           <Container>
-            <button id="closeButton" type="button" onClick={closeModal}>
-              <MdClose size="20px" />
-            </button>
+            <ButtonContainer>
+              <button id="closeButton" type="button" onClick={closeModal}>
+                <MdClose size="20px" />
+              </button>
+            </ButtonContainer>
             <div>Student question</div>
             <p>{question}</p>
             <div>Your answer</div>
